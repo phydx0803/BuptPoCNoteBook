@@ -1,0 +1,452 @@
+%ChapterII.tex
+\section{确定信号分析}
+\subsection{傅里叶级数与傅里叶变换}
+        \paragraph{傅里叶变换与傅里叶级数}\mbox{}
+
+    \begin{equation}\label{eq:ft_f}
+        \left\{ \begin{aligned}
+            x(t) &=\int_{-\infty}^{\infty}X(f)e^{j2\pi ft}\dif f\\
+            X(f) &=\int_{-\infty}^{\infty}x(t)e^{-j2\pi ft}\dif t
+        \end{aligned} \right.
+    \end{equation}
+    \begin{equation}\label{eq:ft_omega}
+        \left\{ \begin{aligned}
+            f(t) &=\int_{-\infty}^{\infty}F(\Omega)e^{j\Omega t}\dif \Omega\\
+            F(\Omega) &=\frac{1}{2\pi}\int_{-\infty}^{\infty}f(t)e^{-j\Omega t}\dif t
+        \end{aligned} \right.
+    \end{equation} 
+    \begin{equation}
+        \left\{ \begin{aligned}
+            h(t) &=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}H(\Omega)e^{j\Omega t}\dif \Omega\\
+            H(\Omega) &=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}h(t)e^{-j\Omega t}\dif t
+        \end{aligned} \right.
+    \end{equation}
+
+    上面是常见的傅里叶变换的三种写法。《信号与系统》多采用\eqaref{eq:ft_omega}的形式，
+    本笔记为与书中保持一致，
+    使用\eqaref{eq:ft_f}的形式。其性质可以参考\emph{附录}\ref{appendix:I}。
+
+    \paragraph{内积、能量与许瓦茨不等式}\mbox{}
+
+    \begin{mydef}{内积}\label{def:inner}
+        令$x(t)$，$y(t)$为任意信号，一般情况下可以是时间的复函数，称
+        \begin{equation}
+            <x,y>=\int_{-\infty}^{\infty}x(t)y^*(t)\dif t
+        \end{equation}
+        为信号$x(t)$，$y(t)$的内积。
+    \end{mydef}
+    
+    通过内积可以定义信号的能量与互能量
+    \begin{mydef}{能量与互能量}\label{def:energy}
+        信号与其自身的内积就是\emph{能量}
+        \begin{equation}
+            E_x=\int_{-\infty}^{\infty}x(t)x^*(t)\dif t=\int_{-\infty}^{\infty}\abs{x}^2(t)\dif t
+        \end{equation}
+
+        而两个信号之间的内积则称作\emph{互能量}
+        \begin{equation}
+            E_{xy}=\int_{-\infty}^{\infty}x(t)y^*(t)\dif t
+        \end{equation}
+    \end{mydef}
+    不难发现，互能量满足$E_{xy}=E_{yx}^*$。
+    若果两个信号的内积，即互能量为0，则称之为\emph{正交}。
+    对于两个信号之和的能量
+    \begin{equation}
+        \begin{split}
+            E_{x+y}&=\int_{-\infty}^{\infty}[x(t)+y(t)]\cdot[x(t)+y(t)]^*\dif t\\
+                   &=\int_{-\infty}^{\infty}[x(t)x^*(t)+x(t)y^*(t)+y(t)x^*(t)+y(t)y^*(t)]\dif t\\
+                   &=E_x+E_{xy}+E_{yx}+E_y 
+        \end{split}
+    \end{equation}
+
+    可见，当两个信号正交的时候，两个信号之和的能量等于各自能量的加和。
+    
+    $x(t)$除以$\sqrt{E_x}$的结果$\dfrac{x(t)}{\sqrt{E_x}}$的能量是 $1$。又有如下定义
+    \begin{mydef}{归一化相关系数}
+        两个能量归一化的信号内积成为归一化相关系数
+        \begin{equation}
+            \rho_{xy}=\int_{-\infty}^{\infty}\frac{x(t)}{\sqrt{E_x}}\cdot\frac{y(t)}{\sqrt{E_y}}\dif t
+        \end{equation}
+    \end{mydef}
+
+    根据\makebox[0pt][l]{洗袜子}\makebox[0pt][l]{\rule[0.3ex]{3em}{0.7pt}}\rule[1.2ex]{3em}{0.7pt}\footnote{理学院刘吉佑老师的奇妙口音\hspace{-13em}\rule[0.7ex]{13em}{0.7pt}}
+    施瓦茨不等式，不难得\footnote{证明见\textcolor{bupt}{附录}\ref{appendix:III}}:
+    \begin{align}
+        \abs{\rho_{xy}}\leq 1\\
+        E_{xy}E_{yx}\leq E_xE_y
+    \end{align}
+    当且仅当$y(t)=K\cdot x(t)$时取等，其中$K$是任一常数。
+
+\subsection{能量谱密度与功率谱密度}
+    这一部分的公式总结见\emph{附录}\ref{appendix:IV}
+
+    \Emph{需要注意的是，这一部分使用的记号与书上不同}，
+    笔记采用的是杨鸿文老师公开课\footnote{\url{https://www.bilibili.com/video/BV11x411G79C}}
+    上推导使用的记号，其目的是为了与\defref{def:inner}保持一致，
+    把第一个角标对应的信号做时延，放在二元内积运算 $ <f,g> $ 的左侧 $f$ 的位置上；
+    第二个角标对应的信号取共轭，放在二元内积运算 $ <f,g> $ 的左侧 $g$ 的位置上。
+    实际上此记号也与《信号与系统》\footnote{高等教育出版社，吕玉琴版，P240}保持了一致。
+    
+    记号与龙老师给出的记号不一致但仍然等价，使用时请注意\emph{自洽性}。
+
+    \paragraph{能量谱密度与互能量谱密度}\mbox{}
+
+    如果$x(t)$的能量有限，有$x(t)\leftrightarrow X(f)$，称
+    \begin{equation}
+        E_x(f)=\abs{X(f)}^2
+    \end{equation}
+    为$x(t)$的\emph{能量谱密度}。
+
+    $x(t)$与$x(t+\tau)$的内积称为$x(t)$的\emph{自相关函数}：
+    \begin{equation}
+        R_x(\tau)=<x(t+\tau),x(t)>=\int_{-\infty}^{\infty}x(t+\tau)x^*(t)\dif t
+    \end{equation}
+    可以进行如下的变形处理
+    \begin{equation}
+        \begin{split}
+            R_x(\tau) &=\int_{-\infty}^{\infty}x(t+\tau)x^*(t)\dif t\\
+                      &\xrightarrow[\text{变为卷积}]{t=t-\tau}\int_{-\infty}^{\infty}x(t)x^*[-(\tau-t)]\dif t\\
+                      &=x(\tau)*x^*(-\tau)\\
+                      &=\mathscr{F}^{-1}[X(f)X^*(f)]\\
+                      &=\int_{-\infty}^{\infty}E_x(f)e^{j2\pi f\tau}\dif f
+        \end{split}
+    \end{equation}
+    
+    自相关函数$R_x(\tau)$有如下性质：
+    \subparagraph{\hspace{-1em}}自相关函数与能量谱密度是傅里叶变换对。
+    \subparagraph{\hspace{-1em}}$R_x(\tau)$在$\tau=0$的时候最大，且$\abs{R_x(\tau)}\leq R_x(0)=E_x$。
+    
+    \Proof
+    根据施瓦兹不等式\footnote{见\textcolor{bupt}{附录}\ref{appendix:III}}，
+    记$x'(t)=x(t+\tau)$，$R_x(\tau)=<x',x>=E_{x'x}$，则
+    \begin{equation}
+            \abs{R_x(\tau)}\leq \sqrt{E_{x'}E_x}=E_x
+    \end{equation}
+    当$x'(t)=K\cdot x(t)$时取等。考虑到$x(t)$是能量信号，为非周期信号，
+    则取等条件为$\tau=0$，故自相关函数在$\tau =0$时最大，且最大能量值等于能量。
+    \subparagraph{\hspace{-1em}}自相关函数满足共轭偶对称$R_x(\tau)=R^*_x(-\tau)$。当$x(t)$为实数时则退化为实偶函数。
+    
+    \Proof 注意到$R_x(\tau)\leftrightarrow E(f)$，因为$E(f)$是实函数，所以$R_x(\tau)$是共轭对称函数。
+
+    结合\eqaref{eq:inner}和\defref{def:energy}可以自然将互谱密度定义为
+    \begin{mydef}{互能量谱密度}
+        两个能量信号$x(t)$,$y(t)$的互能量谱密度为
+        \begin{equation}
+            E_{xy}=X(f)Y^*(f);E_{yx}=Y(f)X^*(f)
+        \end{equation}
+    \end{mydef}
+    相似的，也可以定义互相关函数
+    \begin{mydef}{互相关函数}
+        能量信号$x(t)$,$y(t)$的互相关函数定义为
+        \begin{equation}
+            R_{xy}(\tau)=\int_{-\infty}^{\infty}x(t+\tau)y^*(t)\dif t
+        \end{equation}
+    \end{mydef}
+    易得$R_{yx}(\tau)=R_{xy}^*(-\tau)$，当$x=y$时便退化为自相关
+
+    不难推出，两个能量信号$x(t)$,$y(t)$的和$z(t)=x(t)+z(t)$的自相关函数为
+    \begin{equation}
+        R_z=R_x+R_{xy}+R_{yx}+R_y
+    \end{equation}
+    
+    互相关的施瓦茨不等式的形式为
+    \begin{equation}
+        \abs{R_{xy}(\tau)}\leq\sqrt{E_x\cdot E_y}
+    \end{equation}
+    \newpage%微调
+    \paragraph{功率谱密度与互功率谱密度}\mbox{}
+
+    若$x(t)$的能量无限，先将其截短$x_T(t)=\text{rect}(\dfrac{t}{T})x(t)$，若$x(t)$有界，
+    则$x_T(t)$是能量信号
+    \begin{equation}
+        E_T=\int_{-\infty}^{\infty}\abs{x_T(t)}^2\dif t=\int_{-\infty}^{\infty}\abs{X_T(f)}^2\dif f
+    \end{equation}
+    则可自然引出:
+    \begin{mydef}{平均功率与功率谱密度}
+        x(t)在$\mathbb{R}$上的功率是
+        \begin{equation}
+            P_x=\abs{\bar x(t)}^2=\lim_{T\to\infty}\frac{E_T}{T}=\int_{-\infty}^{\infty}\lim_{T\to\infty}\frac{\abs{X_T(f)}^2}{T}\dif f
+        \end{equation}
+        称其中
+        \begin{equation}
+            P_x(f)=\lim_{T\to\infty}\frac{\abs{X_T(f)}^2}{T}
+        \end{equation}
+        为功率谱密度
+    \end{mydef}
+
+    功率信号的\emph{自相关函数}可以定义如下：
+    \begin{equation}
+        R_x(\tau)=\lim_{T\to\infty}\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}x(t+\tau)x^*(t)\dif t
+    \end{equation}
+
+    自相关函数$R_x(\tau)$有如下性质：
+    \subparagraph{\hspace{-1em}}自相关函数与功率谱密度是傅里叶变换对。
+
+    \subparagraph{\hspace{-1em}}$R_x(\tau)$在$\tau=0$的时候最大，且$\abs{R_x(\tau)}\leq R_x(0)=P_x$。
+
+    \subparagraph{\hspace{-1em}}自相关函数满足共轭偶对称$R_x(\tau)=R^*_x(-\tau)$。当$x(t)$为实数时则退化为实偶函数。
+
+    相似的，互能量谱、互相关函数也可以推广到功率信号上，具体的公式见\emph{附录}\ref{appendix:IV}。
+
+    \emph{此处举一例}：
+    对于复单频信号$x(t)=e^{j2\pi f_0t}$，不难知其为功率信号。
+    其功率为
+    \begin{equation}
+        \begin{split}
+            P_x &=\lim_{T\to\infty}\left[\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}x(t)x^*(t)\dif t\right]\\
+                &=\lim_{T\to\infty}\left(\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}1\dif t\right)=1
+        \end{split}
+    \end{equation}
+    其截短信号$x_T(t)=e^{j2\pi f_0t}\text{rect}(\frac{t}{T})$，对应的频谱为：
+    \begin{equation}
+        \begin{split}
+            X_T(f)  &=\mathscr{F}[x_T(t)]\\
+                    &=\mathscr{F}[e^{j2\pi f_0t}\text{rect}(\frac{t}{T})]\\
+                    &=\mathscr{F}[e^{j2\pi f_0t}]*\mathscr{F}[\text{rect}(\frac{t}{T})]\\
+                    &=\delta (f-f_0)*T\text{sinc}(Tf)\\
+                    &=T\text{sinc}[T(f-f_0)]
+        \end{split}
+    \end{equation}
+    则有
+    \begin{equation}
+        \begin{split}
+            P_x(f)  &=\lim_{T\to\infty}\frac{\abs{X_T(f)}^2}{T}\\
+                    &=\lim_{T\to\infty}T\text{sinc}^2[T(f-f_0)]
+        \end{split}
+    \end{equation}
+    上极限并不易求得，但是可以根据其性质判断；
+
+    \emph{（1）}对于$f\neq f_0$：
+    \begin{equation*}
+        \begin{split}
+        P_x(f)  &=\lim_{T\to\infty}T\text{sinc}^2[T(f-f_0)]\\
+                &=\lim_{T\to\infty}\frac{\sin^2[T(f-f_0)]}{T(f-f)^2}\\
+                &\leq\lim_{T\to\infty}\frac{1}{T(f-f)^2}=0
+        \end{split}
+    \end{equation*}
+    同时不难知$P_x(f)$非负，故对于$f\neq f_0$，$P_x(f)=0$。
+
+    \emph{（2）}在整个区间$\mathbb{R}$上的积分(即功率)：
+    \begin{equation*}
+        \begin{split}
+            &\phantom{=}\int_{-\infty}^{\infty}P_x(f)\dif f\\
+            &=\lim_{T\to\infty}\left\{\int_{-\infty}^{\infty}T\text{sinc}^2[T(f-f_0)]\dif f\right\}\\
+            &=\lim_{T\to\infty}\left[\int_{-\infty}^{\infty}T\text{sinc}^2(Tf)\dif f\right]\\
+            &=\lim_{T\to\infty}\left\{T\mathscr{F}\left[\text{sinc}(Tf)\text{sinc}(Tf)\right]\middle\vert_{t=0}\right\}\\
+            &=\lim_{T\to\infty}\left\{\frac{T}{T^2}\left[\text{rect}(\frac{t}{T})*\text{rect}(\frac{t}{T})\right]\middle\vert_{t=0}\right\}\\
+            &=\lim_{T\to\infty}\left\{\frac{1}{T}\left[\int_{-\infty}^{\infty}\text{rect}(\frac{\tau}{T})*\text{rect}(\frac{0-\tau}{T})\dif\tau\right]\right\}\\
+            &=\lim_{T\to\infty}\frac{T}{T}=1
+        \end{split}
+    \end{equation*}
+    而考虑到\emph{性质（1）}，可以推测
+    \begin{equation}
+        P_x(f)=\delta(f-f_0) 
+    \end{equation}
+
+    自相关函数
+    \begin{equation}
+        \begin{split}
+            R_x(\tau)   &=\lim_{T\to\infty}\left[\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}x(t+\tau)x^*(t)\dif t\right]\\
+                        &=\lim_{T\to\infty}\left[\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}e^{j2\pi f_0(t+\tau)}e^{-j2\pi t}\dif t\right]\\
+                        &=\lim_{T\to\infty}\left(\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}e^{j2\pi f_0\tau}\dif t\right)\\
+                        &=e^{j2\pi f_0\tau}\lim_{T\to\infty}\left(\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\dif t\right)\\
+                        &=e^{j2\pi f_0\tau}\lim_{T\to\infty}\left(\frac{T}{T}\right)\\
+                        &=e^{j2\pi f_0\tau}
+        \end{split}
+    \end{equation}
+    考虑到自相关函数和功率谱密度为傅里叶变换对，得
+    \begin{equation}
+        P_x(f)=\mathscr{F}[R_x(\tau)]=\delta(f-f_0)
+    \end{equation}
+
+    结合基函数$e^{j2\pi ft}$的\emph{正交性}，也可以知道：
+    对于可以表示成傅里叶级数的周期信号
+    \begin{equation*}
+        s(t) = \sum_{n=-\infty}^{\infty}s_ne^{j\frac{2\pi}{T}nt}
+    \end{equation*}
+    其功率谱密度为
+    \begin{equation}
+        P_s(f) = \sum_{n=-\infty}^{\infty}s_n^2\delta(f-\frac{2\pi}{T}n)
+    \end{equation}
+
+    \paragraph{单边谱}\mbox{}
+    因为工程中常见的信号为实信号，其其能量谱密度或功率谱密度是一个偶函数，
+    故将负数部分折到整数，即
+    \begin{equation}
+        P_x^{\text{单边}}(f)=P_x(f)+P_x(-f)=2P_x(f)
+    \end{equation}
+    可以得到
+    \begin{equation}
+        P_x=\int_{0}^{\infty}P_x^{\text{单边}}(f)\dif f
+    \end{equation}
+
+    \paragraph{信号的带宽}\mbox{}
+
+    带宽是信号频谱的宽度，是信号的能量或功率主要所处的频率范围。
+    以下为几种基带信号带宽的定义：
+    
+    \subparagraph{\hspace{1em}绝对带宽：\protect\footnote{时间受限的信号一般频域无限，因为绝对带宽只对一些理想模型有意义}}
+    如果$P_x(f)$在$[-W,W]$之外确定为0，在$[-W,W]$内基本不为零，则称其\emph{绝对带宽}为$W$。
+
+    \subparagraph{\hspace{1em}主瓣带宽：}若$P_x(f)$的绝对带宽无限，若其存在一些零点（一般是周期性零点），
+    并且大部分功率集中在第一个零点$P_x(W)=0$之内，则称这第一个零点$W$为$x(t)$的\emph{主瓣带宽}。
+
+    \subparagraph{\hspace{1em}3dB带宽：}很多基带信号功率谱密度的最大值点为$f=0$，即$P_x(0)\geq P_x(f)$。
+    此时，功率谱密度相对于最大值下降一半(3dB)的位置就是3dB带宽，即$P_x(W)=\dfrac{1}{2}P_x(0)$。
+
+    \subparagraph{\hspace{1em}等效矩形带宽：}用一个面积相同且高度相同的矩形代替，该矩形的宽度即为等效矩形带宽
+    \begin{equation}
+        W=\frac{\displaystyle\int_{-\infty}^{\infty}P_x(f)\dif f}{2P_x(0)}=\frac{P_x}{2P_x(0)}
+    \end{equation}
+
+    \subparagraph{\hspace{1em}功率占比带宽：}如99\% 的含义为
+    \begin{equation}
+        \frac{\displaystyle\int_{-W}^{W}P_x(f)\dif f}{\displaystyle\int_{-\infty}^{\infty}P_x(f)\dif f}=99\%
+    \end{equation}
+
+    能量信号号的带宽可以类似定义。
+
+\subsection{线性时不变系统}
+
+    \paragraph{输入输出关系}\mbox{}
+
+    线性时不变系统简称线性系统，其输入为$x(t)$，输出为$y(t)$、单位冲激响应为$h(t)$，其关系为$y(t)=x(t)*h(t)$，
+    其中$*$为卷积\footnote{见\defref{def:conv}}。对应频域的乘积$Y(f)=X(f)H(f)$。
+
+    其能量谱与功率谱也有类似变换：
+    \begin{align}
+        E_y(f)=E_x(f)\abs{H(f)}^2\\
+        P_y(f)=P_x(f)\abs{H(f)}^2
+    \end{align}
+
+    \paragraph{理想低通与带通滤波器}\mbox{}
+
+    带宽为$W$的理想低通滤波器的传递函数为
+    \begin{equation}
+        H(f)=
+        \begin{cases}
+            1,\hspace{1em}\abs{f}\leq W\\
+            0,\hspace{1em}\abs{f}> W
+        \end{cases}
+    \end{equation}
+    
+    带宽为$B$的理想带通滤波器的传递函数为
+    \begin{equation}
+        H(f)=
+        \begin{cases}
+            1,\hspace{1em}\mathmakebox[6em][c]{f_L\leq\abs{f}\leq f_H} \\
+            0,\hspace{1em}\mathmakebox[6em][c]{\text{else}}
+        \end{cases}
+    \end{equation}
+    其中$0<f_L<f_H$，$B=f_H-f_L$。除特殊声明，默认通带增益为1。
+
+    \paragraph{希尔伯特变换}\mbox{}
+
+    见\emph{附录}\ref{appendix:II}。
+
+\subsection{带通信号与带通系统}
+    带通信号指的是频谱集中在某个载频$f_c$附近的信号。
+    \paragraph{复包络}\mbox{}
+
+    带通信号$x(t)$的复包络定义为
+    \begin{equation}
+        x_L(t)=[x(t)+j\hat{x}(t)]e^{-j2\pi f_ct}
+    \end{equation}
+    其中$z(t)=x(t)+j\hat{x}(t)$是解析信号，只有正频率,$x_L(t)$是 $z(t)$的频移，即
+    $X_L(f)=Z(f+f_c)$
+    由$x_L(t)$得到$x(t)$的过程为
+    \begin{equation}
+        x(t)=\text{Re}\left\{x_L(t)e^{j2\pi f_ct}\right\}
+    \end{equation}
+    不难得到如下的频谱关系\footnote{默认最高频率小于$f_c$}
+    \begin{align}\label{eq:xl_x}
+        X_L(f)&=2X(f+f_c),\hspace{1em}\abs{f}<f_c\\
+        X(f)&=\frac{1}{2}X_L(f-f_c)+\frac{1}{2}X_L(-f-f_c)
+    \end{align}
+
+    类似的，功率谱也有如下关系
+    \begin{align}
+        P_L(f)&=4P(f+f_c),\hspace{1em}\abs{f}<f_c\\
+        P(f)&=\frac{1}{4}P_L(f-f_c)+\frac{1}{4}P_L(-f-f_c)
+    \end{align}
+
+    \paragraph{带通信号的表示}\mbox{}
+
+    设$x_L(t)=A(t)e^{j\phi (t)}$，其中$A(t)$是$x_L(t)$的模值，$e^{j\phi (t)}$则是相位。
+    那么有
+    \begin{equation}
+        \begin{split}
+            x(t)&=\text{Re}\left\{x_L(t)e^{j2\pi f_ct}\right\}\\
+                &=\text{Re}\left\{x_L(t)\right\}\cos (2\pi f_ct)-\text{Im}\left\{x_L(t)\right\}\sin (2\pi f_ct)\\
+                &=A(t)\cos\phi(t)\cos (2\pi f_ct)-A(t)\sin\phi(t)\sin (2\pi f_ct)\\
+                &=A(t)\cos[2\pi f_ct+\phi(t)]
+        \end{split}
+    \end{equation}
+
+    称
+    $x_c(t)=\text{Re}\left\{x_L(t)\right\}$为$x(t)$的\emph{同向分量}，
+    $x_s(t)=\text{Im}\left\{x_L(t)\right\}$为$x(t)$的\emph{正交分量}，
+    $A(t)$为$x(t)$的\emph{包络}（包络就是复包络的模），
+    $\phi(t)$为$x(t)$的相位。
+
+    \paragraph{带通系统的等效基带分析}\mbox{}
+
+    对于某系统有如下关系
+    \begin{equation}
+        \begin{split}
+            y(t)=x(t)*h(t)\\
+            Y(f)=X(f)H(f)
+        \end{split}
+    \end{equation}
+
+    $x(t)$、$y(t)$、$h(t)$对应的复包络为$x_L(t)$、$y_L(t)$、$h_L(t)$。
+    对于$f>0$则有：
+    \begin{equation}
+        \begin{split}
+            X(f)=\frac12X_L(f-f_c)\\
+            Y(f)=\frac12Y_L(f-f_c)\\
+            H(f)=\frac12H_L(f-f_c)
+        \end{split}
+    \end{equation}
+    记
+    \begin{equation}
+        \begin{split}
+            H_e(f)&=\frac12H_L(f)\\
+            h_e(f)&=\frac12h_L(t)\\
+        \end{split}
+    \end{equation}
+    不难得到：
+    \begin{equation}
+        \begin{split}
+            Y_L(f)&=X_L(f)H_e(f)\\
+            y_L(f)&=x_L(t)*h_e(t)
+        \end{split}
+    \end{equation}
+    这说明频带信号通过带通系统等效于其复包络通过一个等效的基带系统。
+
+\subsection{无失真系统}
+    \paragraph{波形无失真}\mbox{}
+
+    波形无失真要求所有频率成分的时延相同，仅有幅度发生变化。
+    要求在频带内，增益$\abs{H(f)}$为常数，相位则与频率成正比，即相频特性过原点。
+    \begin{mydef}{时延特性}
+        系统的时延特性为
+        \begin{equation}
+            \tau(f)=-\frac{\varphi(f)}{2\pi f}\hspace{1em}f>0
+        \end{equation}
+    \end{mydef}
+    如果$\tau(f)$为定值，不难知道，该定值就是输出相对于输入落后的时间。
+
+    \paragraph{复包络无失真}\mbox{}
+
+    复包络无失真要求幅频特性为常数，相频特性是一条直线。
+    \begin{mydef}{群时延特性}
+        带通系统的群时延特性为
+        \begin{equation}
+            \tau_G(f)=-\frac{1}{2\pi}\cdot\frac{\dif\varphi(f)}{\dif f}
+        \end{equation}
+    \end{mydef}
+    
+    若群时延特性为常数，不难知道系统的复包络仅在幅度上发生变化，可以粗略的理解为信号的"轮廓"没有发生该改变。
+    （这里建议多做几个实验或者仿真计算体会一下）
+
