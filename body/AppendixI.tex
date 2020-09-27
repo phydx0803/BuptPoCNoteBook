@@ -1,0 +1,389 @@
+%AppendixI.tex
+\section{傅里叶变换及其性质}\label{appendix:I}
+\subsection{傅里叶变换的定义}
+    \begin{mydef}{傅里叶级数}\label{def:fs}
+    任意周期为 $T$ 的周期信号 $s(t)$ 可以展开为傅里叶级数
+    \begin{equation}
+        \begin{split}
+            s(t) &= \sum_{n=-\infty}^{\infty}s_ne^{j\frac{2\pi}{T}nt}\\
+            s_n  &= \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}s(t)e^{-j\frac{2\pi}{T}nt}\dif t
+        \end{split}
+    \end{equation}
+    \end{mydef}
+    当$T\to\infty$后，离散谱趋向于连续谱，则得到如下的傅里叶变换:
+    \begin{mydef}{傅里叶变换}\label{def:ft}
+    任意信号\footnote{书中提到的“任意信号”在没有特殊说明下均为有物理意义的信号，无需讨论傅里叶变换的成立条件}
+    $x(t)$ 可以进行傅里叶变换
+    \begin{equation}
+        \begin{split}
+            x(t) =\mathscr{F}^{-1} [X(f)]=\int_{-\infty}^{\infty}X(f)e^{j2\pi ft}\dif f\\
+            X(f) =\mathscr{F}      [x(t)]=\int_{-\infty}^{\infty}x(t)e^{-j2\pi ft}\dif t
+        \end{split}
+    \end{equation}
+    \end{mydef}
+    \subsection{傅里叶变换的性质}
+    \paragraph{线性}
+    设有$X(f)=\mathscr{F}[x(t)]$，记作$x(t)\leftrightarrow X(f)$，（$y(t)\leftrightarrow Y(f)$同理）
+        对于任意常数$c_1,c_2$总有
+        \begin{equation}
+            c_1x(t)+c_2y(t)\leftrightarrow c_1X(f)+c_2Y(f)
+        \end{equation}
+        \Proof
+        \begin{equation*}
+            \begin{split}
+                \mathscr{F}[c_1x(t)+c_2y(t)] &=\int_{-\infty}^{\infty} [c_1x(t)+c_2y(t)]e^{-j2\pi ft}\dif t\\
+                                             &=c_1\int_{-\infty}^{\infty}x(t)e^{-j2\pi ft}\dif t+c_2\int_{-\infty}^{\infty}y(t)e^{-j2\pi ft}\dif t\\
+                                             &=c_1X(f)+c_2Y(f)
+            \end{split}
+        \end{equation*}
+
+    \paragraph{对称性}
+        若$x(t)\leftrightarrow X(f)$，则
+        \begin{equation}
+            X(t)\leftrightarrow x(-f) 
+        \end{equation}
+        \Proof 根据反变换公式
+    \begin{align*}
+        x(t) =\int_{-\infty}^{\infty}X(f)e^{j2\pi ft}\dif f\\
+        \intertext{做换元$t\rightarrow -t$得}\\
+        x(-t) =\int_{-\infty}^{\infty}X(f)e^{-j2\pi ft}\dif f
+    \end{align*}
+        交换上式中的$t$与$f$得
+    \begin{equation*}
+        x(-f) =\int_{-\infty}^{\infty}X(t)e^{-j2\pi ft}\dif t
+    \end{equation*}
+    对照\defref{def:ft}即得$X(t)\leftrightarrow x(-f)$
+
+    \paragraph{尺度变换性质}
+        若$x(t)\leftrightarrow X(f)$，对于任意实数$a$有
+        \begin{equation}
+           x(at)\leftrightarrow \frac{1}{\vert a \vert}X\left(\frac{f}{a}\right)
+        \end{equation}
+        \Proof
+
+        \subparagraph{}若$a>0$，令$\tau=at$，$t=\tau /a$，$\dif t=\dif \tau /a$，则
+        \begin{equation*}
+            \mathscr{F}[x(at)]=\frac{1}{a}\int_{-\infty}^{\infty}x(\tau)e^{-j2\pi f\frac{\tau}{a}}\dif \tau=\frac{1}{a}X\left(\frac{f}{a}\right)
+        \end{equation*}
+        \subparagraph{}若$a<0$，即$a=-\abs{a}$，令$\tau=at$，$t=\tau /a$，$\dif t=\dif \tau /a$，则
+        \begin{equation*}
+            \mathscr{F}[x(at)]=\frac{-1}{\abs{a}}\int_{-\infty}^{\infty}x(\tau)e^{-j2\pi f\frac{\tau}{a}}\dif \tau=\frac{1}{\abs{a}}X\left(\frac{f}{a}\right)
+        \end{equation*}
+        
+        综上，该性质得证。
+    \paragraph{时移性质}
+        若$x(t)\leftrightarrow X(f)$，则
+        \begin{equation}
+            x(t-t_0)\leftrightarrow X(f)e^{-j2\pi ft_0}
+        \end{equation}
+        \Proof
+        \begin{equation*}
+            \mathscr{F}[x(t-t_0)]=\int_{-\infty}^{\infty}x(t-t_0)e^{-j2\pi ft}\dif t    
+        \end{equation*}
+        令$t-t_0=\tau$
+        \begin{equation*}
+            \mathscr{F}[x(t-t_0)]=\int_{-\infty}^{\infty}x(\tau)e^{-j2\pi f(\tau +t_0)}\dif \tau =X(f)e^{-j2\pi ft_0}   
+        \end{equation*}
+
+    \paragraph{频移性质}
+        若$x(t)\leftrightarrow X(f)$，则
+        \begin{equation}
+            x(t)e^{j2\pi f_0t}\leftrightarrow X(f-f_0)
+        \end{equation}
+        \Proof
+        \begin{equation*}
+            \mathscr{F}^{-1}[X(f-f_0)]=\int_{-\infty}^{\infty}X(f-f_0)e^{j2\pi ft}\dif f    
+        \end{equation*}
+        令$f-f_0=\mu$
+        \begin{equation*}
+            \mathscr{F}^{-1}[X(f-f_0)]=\int_{-\infty}^{\infty}X(\mu)e^{-j2\pi (\mu +f_0)t)}\dif \mu = x(t)e^{j2\pi f_0t} 
+        \end{equation*}
+    \paragraph{时域微分性质}
+        若$x(t)\leftrightarrow X(f)$，则
+        \begin{equation}
+            \frac{\dif x(t)}{\dif t}\leftrightarrow (j2\pi f)X(f)
+        \end{equation}
+        \Proof 由\defref{def:ft}得
+        \begin{equation*}
+            x(t) =\int_{-\infty}^{\infty}X(f)e^{j2\pi ft}\dif f
+        \end{equation*}
+        将等式两端对$t$求导，则有
+        \begin{equation*}
+            \frac{\dif x(t)}{\dif t} =\frac{\dif}{\dif t}\int_{-\infty}^{\infty}X(f)e^{j2\pi ft}\dif f
+        \end{equation*}
+        交换微分和积分的次序,可得
+        \begin{equation*}
+            \frac{\dif x(t)}{\dif t} =\int_{-\infty}^{\infty}[(j2\pi f)X(f)]e^{j2\pi ft}\dif f
+        \end{equation*}
+        对照\defref{def:ft}可知
+        \begin{equation*}
+            \frac{\dif x(t)}{\dif t} \leftrightarrow (j2\pi f)X(f)
+        \end{equation*}
+
+    \paragraph{频域微分性质}
+        若$x(t)\leftrightarrow X(f)$，则
+        \begin{equation}
+            (-j2\pi t)x(t) \leftrightarrow \frac{\dif X(f)}{\dif f}
+        \end{equation}
+        \Proof 由\defref{def:ft}得
+        \begin{equation*}
+            X(f) =\int_{-\infty}^{\infty}x(t)e^{-j2\pi ft}\dif t
+        \end{equation*}
+        将等式两端对$f$求导，则有
+        \begin{equation*}
+            \frac{\dif X(f)}{\dif f} =\frac{\dif}{\dif f}\int_{-\infty}^{\infty}x(t)e^{-j2\pi ft}\dif t
+        \end{equation*}
+        交换微分和积分的次序,可得
+        \begin{equation*}
+            \frac{\dif X(f)}{\dif f} =\int_{-\infty}^{\infty}[(-j2\pi t)x(t)]e^{-j2\pi ft}\dif t
+        \end{equation*}
+        对照\defref{def:ft}可知
+        \begin{equation*}
+            (-j2\pi t)x(t) \leftrightarrow \frac{\dif X(f)}{\dif f}
+        \end{equation*}
+    
+    \paragraph{共轭对称性}
+        若$x(t)\leftrightarrow X(f)$，则
+        \begin{equation}
+            x^*(t)\leftrightarrow X^*(-f)
+        \end{equation}
+        \Proof 
+        \begin{equation*}
+            \begin{split}
+                \mathscr{F}[x^*(t)] &= \int_{-\infty}^{\infty}x^*(t)e^{-j2\pi ft}\dif t\\
+                                    &= \left[\int_{-\infty}^{\infty}x(t)e^{-j2\pi (-f)t}\dif t\right]^*\\
+                                    &= X^*(-f)
+            \end{split}
+        \end{equation*}
+
+    \paragraph{内积性质}对于$x(t)\leftrightarrow X(f)$，$y(x)\leftrightarrow Y(x)$
+    \begin{equation}\label{eq:inner}
+        \int_{-\infty}^{\infty}x(t)y^*(t)\dif t=\int_{-\infty}^{\infty}X(f)Y^*(f)\dif f
+    \end{equation} 
+    \Proof
+    \begin{equation*}
+        \begin{split}
+            \int_{-\infty}^{\infty}x(t)y^*(t)\dif t &= \int_{-\infty}^{\infty}\left[\int_{-\infty}^{\infty}X(f)e^{j2\pi ft}\dif f\right]y^*(t)\dif t\\
+                                                    &= \int_{-\infty}^{\infty}X(f)\left[\int_{-\infty}^{\infty}y^*(t)e^{j2\pi ft}\dif t\right]\dif f\\
+                                                    &= \int_{-\infty}^{\infty}X(f)\left[\int_{-\infty}^{\infty}y(t)e^{-j2\pi ft}\dif t\right]^*\dif f\\
+                                                    &= \int_{-\infty}^{\infty}X(f)Y^*(f)\dif f
+        \end{split}
+    \end{equation*}
+
+    \subsection{卷积定理}
+    卷积的定义如下
+    \begin{mydef}{卷积}\label{def:conv}
+        对于$t\in\mathbb{R}$有函数$f(t),g(t)\in\mathbb{C}$
+        则规定卷积运算符$*$为
+        \begin{equation}
+            h(t)=f(t)*g(t)=\int_{-\infty}^{\infty}f(\tau)g(t-\tau)\dif \tau
+        \end{equation}
+    \end{mydef}
+    \subsubsection{时域卷积定理}
+    \begin{mythm}{时域卷积定理}\label{thm:tconv}
+        若$x_1(t)\leftrightarrow X_1(f),x_2(t)\leftrightarrow X_2(f)$，则
+        \begin{equation}
+            x_1(t)*x_2(t)\leftrightarrow F_1(f)F_2(f)
+        \end{equation}
+    \end{mythm}
+    \Proof
+    \begin{equation*}
+        \begin{split}
+            \mathscr{F}[x_1(t)*x_2(t)] &=\int_{-\infty}^{\infty}e^{-j2\pi ft}\left[\int_{-\infty}^{\infty}x_1(\tau)x_2(t-\tau)\dif \tau\right]\dif t\\
+                                       &=\int_{-\infty}^{\infty}x_1(\tau)\left[\int_{-\infty}^{\infty}e^{-j2\pi ft}x_2(t-\tau)\dif t\right]\dif \tau\\
+                                       &=\int_{-\infty}^{\infty}x_1(\tau)e^{-j2\pi f\tau}X_2(f)\dif\tau\\
+                                       &=X_1(f)X_2(f)
+        \end{split}
+    \end{equation*}
+
+    \subsubsection{频域卷积定理}
+    \begin{mythm}{频域卷积定理}\label{thm:fconv}
+        若$x_1(t)\leftrightarrow X_1(f),x_2(t)\leftrightarrow X_2(f)$，则
+        \begin{equation}
+            x_1(t)x_2(t)\leftrightarrow F_1(f)*F_2(f)
+        \end{equation}
+    \end{mythm}
+    \Proof
+    \begin{equation*}
+        \begin{split}
+            \mathscr{F}^{-1}[X_1(f)*X_2(f)] &=\int_{-\infty}^{\infty}e^{j2\pi ft}\left[\int_{-\infty}^{\infty}X_1(\mu)X_2(f-\mu)\dif \mu\right]\dif f\\
+                                            &=\int_{-\infty}^{\infty}X_1(\mu)\left[\int_{-\infty}^{\infty}e^{j2\pi ft}X_2(f-\mu)\dif f\right]\dif \mu\\
+                                            &=\int_{-\infty}^{\infty}X_1(\mu)e^{j2\pi f\mu}x_2(t)\dif\mu\\
+                                            &=x_1(t)x_2(t)
+        \end{split}
+    \end{equation*}
+
+\subsection{帕塞瓦尔定理}
+    帕塞瓦尔定理是傅里叶变换的基函数$e^{-j2\pi ft}$正交性的体现
+    \begin{mythm}{帕塞瓦尔定理}\label{thm:parseval}
+        若$x(t)\leftrightarrow X(f)$，则
+        \begin{equation}
+            \int_{-\infty}^{\infty}\abs{x(t)}^2\dif t = \int_{-\infty}^{\infty}\abs{X(f)}^2\dif f
+        \end{equation}
+    \end{mythm}
+    \Proof
+    \begin{equation*}
+        \begin{split}
+            \int_{-\infty}^{\infty}\abs{x(t)}^2\dif t &= \int_{-\infty}^{\infty}x(t)x^*(t)\dif t\\
+                                                      &= \int_{-\infty}^{\infty}\left[\int_{-\infty}^{\infty}X(f)e^{j2\pi ft}\dif f\right]x^*(t)\dif t\\
+                                                      &= \int_{-\infty}^{\infty}X(f)\left[\int_{-\infty}^{\infty}x^*(t)e^{j2\pi ft}\dif t\right]\dif f\\
+                                                      &= \int_{-\infty}^{\infty}X(f)\left[\int_{-\infty}^{\infty}x(t)e^{-j2\pi ft}\dif t\right]^*\dif f\\
+                                                      &= \int_{-\infty}^{\infty}X(f)X^*(f) \dif f= \int_{-\infty}^{\infty}\abs{X(f)}^2\dif f
+        \end{split}
+    \end{equation*}
+
+\subsection{典型信号的傅里叶变换}
+    \paragraph{矩形脉冲信号与抽样函数} 矩形脉冲信号表达式为
+    \begin{equation}
+        x(t)=E\text{rect}\left(\frac{t}{\tau}\right)=
+        \begin{cases}
+            E\phantom{0}\hspace{10pt}\left(\abs{t}<\frac{\tau}{2}\right)\\
+            0\phantom{E}\hspace{10pt}\left(\abs{t}>\frac{\tau}{2}\right)\\  
+        \end{cases}
+    \end{equation}
+    \begin{equation*}
+        \begin{split}
+            X(f)&=\int_{-\infty}^{\infty}x(t)e^{-j2\pi ft}\dif t\\
+                &=E\int_{-\frac{\tau}{2}}^{\frac{\tau}{2}}e^{-j2\pi ft}\dif t\\
+                &=-\frac{E}{j2\pi f}(e^{-j2\pi f\frac{\tau}{2}}-e^{j2\pi f\frac{\tau}{2}})\\
+                &=\frac{E}{\pi f}\sin{2\pi f\frac{\tau}{2}}\\
+                &=E\tau \text{sinc}(f\tau)
+        \end{split}
+    \end{equation*}
+    即
+    \begin{equation}
+        E\text{rect}\left(\frac{t}{\tau}\right)\leftrightarrow E\tau \text{sinc}(f\tau)
+    \end{equation}
+    相应的，由对称性得到
+    \begin{equation}
+        2WE\text{sinc}(2Wt)\leftrightarrow E\text{rect}\left(\frac{f}{2W}\right)
+    \end{equation}
+    \paragraph{直流信号与冲激函数}
+    \begin{equation}
+        \begin{split}
+        \mathscr{F}[\delta(t)] &=\int_{-\infty}^{\infty}\delta(t)e^{-j2\pi ft}\dif t\\
+                               &=\int_{-\infty}^{\infty}\delta(t)\dif t\\
+                               &=1
+        \end{split}
+    \end{equation}
+    由对称性得到
+    \begin{equation}
+        \mathscr{F}[1]=\delta (-f)=\delta (f)
+    \end{equation}
+
+    \paragraph{符号函数}
+        \begin{align*}
+            \text{sgn}(t)\leftrightarrow X(f)
+        \intertext{应用时域微分性质得}
+            2\delta (f) \leftrightarrow (j2\pi f)X(f)
+        \end{align*}
+        即得
+        \begin{equation}
+            \mathscr{F}[\text{sgn}(t)]= \frac{1}{j\pi f}
+        \end{equation}
+        由对称性得
+        \begin{equation}\label{eq:hilb}
+            \mathscr{F}[\frac{1}{\pi t}]= j\text{sgn}(-t)=-j\text{sgn}(t)
+        \end{equation}
+    
+\subsection{周期冲激序列}
+    \subsubsection{一般周期信号的傅里叶变换}
+        对于一个周期为$T$的信号，其基频记作$f_0=1/T$
+        由\defref{def:fs}逆变换式得一般周期信号的傅里叶级数为
+        \begin{equation*}
+            s(t) = \sum_{n=-\infty}^{\infty}s_ne^{j\frac{2\pi}{T}nt}
+        \end{equation*}
+        对上式两边做傅里叶变换得
+        \begin{equation*}
+            \begin{split}
+                S(f)&=\mathscr{F}[s(t)]=\mathscr{F}\left[\sum_{n=-\infty}^{\infty}s_ne^{j\frac{2\pi}{T}nt}\right]\\
+                    &=\sum_{n=-\infty}^{\infty}s_n\mathscr{F}[e^{j\frac{2\pi}{T}nt}]\\
+                    &=\sum_{n=-\infty}^{\infty}s_n\delta(f-nf_0)
+            \end{split}
+        \end{equation*}
+        其中
+        \begin{equation*}
+            s_n  = \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}s(t)e^{-j\frac{2\pi}{T}nt}\dif t
+        \end{equation*}
+        可以知道，一个信号以周期为$T$周期化之后，
+        频域相当于原信号频谱以$f_0$间隔用$\delta(f)$进行理想抽样。
+        抽样后的冲激函数强度恰等于谱系数$s_n$。
+
+    \subsubsection{周期冲击序列的傅里叶变换}
+        取原信号为$\delta(t)$，其傅里叶变换为$\mathscr{F}[\delta(t)]=1$。
+        将该信号一周期$T$进行周期化，记作
+        \begin{equation}
+            \Delta_T(t)=\sum_{n=-\infty}^{\infty}\delta(t-nT)
+        \end{equation}
+        根据上一节的推导
+        \begin{equation*}
+            s_n=\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\delta(t)e^{-j\frac{2\pi}{T}nt}\dif t =\frac{1}{T}
+        \end{equation*}
+        故有
+        \begin{equation}
+            \mathscr{F}[\Delta_T(t)]=\frac{1}{T}\sum_{n=-\infty}^{\infty}\delta(f-nf_0)
+        \end{equation}
+    
+    \subsubsection{理想采样}
+        对信号$x(t)$在时域进行理想采样，频域体现为周期性搬移：
+        \begin{equation}\label{eq:FourierofDelta}
+            \begin{split}
+                \mathscr{F}[x(t)\sum_{n=-\infty}^{\infty}\delta(t-nT)]&= X(f)*\frac{1}{T}\sum_{n=-\infty}^{\infty}\delta(f-nf_0)\\
+                                                                      &= \frac{1}{T}\sum_{n=-\infty}^{\infty}X(f-nf_0)
+            \end{split}
+        \end{equation}
+        对频谱$X(f)$在频域进行理想采样，时域体现为周期性搬移：
+        \begin{equation}
+            \begin{split}
+                \mathscr{F}^{-1}[X(f)\sum_{n=-\infty}^{\infty}\delta(f-nf_0)] &= x(t)*T\sum_{n=-\infty}^{\infty}\delta(t-nT)\\
+                                                                              &= T\sum_{n=-\infty}^{\infty}x(t-nT)
+            \end{split}
+        \end{equation}
+
+\subsection{离散时间傅里叶变换及连续系统的时域仿真}
+    \subsubsection{离散时间傅里叶变换}
+        在计算机中，不能存储连续信号每一时刻的所有数据，
+        所以为了方便模拟，便对连续信号进行抽样。
+        在满足\emph{奈奎斯特采样定理}的情况下进行采样，
+        由\eqaref{eq:FourierofDelta}表明：
+        信号经过理想抽样后的频谱仅在幅度上放大了$1/T$倍并进行了周期化。
+        \begin{mydef}{离散时间傅里叶变换(DTFT)}
+            对于满足绝对可和连续序列$x(n)$有
+            \begin{equation}
+                X(e^{j\omega})=\sum_{n=-\infty}^{\infty}x(n)e^{-jn\omega}
+            \end{equation}
+        \end{mydef}
+        不难知道，如果$x(n)$是$x_a(t)$的抽样的话，即$x(n)=x_a(nT)$，
+        则有
+        \begin{equation*}
+            X(e^{j\omega})=\frac{1}{T}\sum_{n=-\infty}^{\infty}X(\Omega-n\Omega_0)
+        \end{equation*}
+        其中采用另一种傅里叶变换的形式:
+        \begin{equation}
+            \begin{split}
+                x(t)&=\frac{1}{2\pi}\int_{-\infty}^{\infty}X(\Omega)e^{j\Omega t}\dif\Omega\\
+                X(\Omega)&=\int_{-\infty}^{\infty}x(t)e^{-j\Omega t}\dif t
+            \end{split}
+        \end{equation}
+
+    \subsubsection{傅里叶变换的数值计算}
+    由上一节的内容可以知道，若想数值计算一个信号的频谱，
+    可以先对其以充分小\footnote{严格满足或较好地满足奈奎斯特采样定理}的$T$进行采样，
+    对采样后的结果乘$T$倍做DTFT，即近似得到信号的频谱的周期化结果。
+    考虑到DTFT的结果为连续值，不方便存储和显示，
+    可以使用快速傅里叶变换（FFT）进行计算，得到其频谱的采样\footnote{具体阐述可以见\url{https://zhuanlan.zhihu.com/p/136812943}}。
+    
+    \subsubsection{卷积的仿真}
+    以下不加证明地给出结论。
+    对于严格带限或近似带限的连续信号$x_a(t),h_a(t),y_a(t)$，
+    若有
+    \begin{equation*}
+        y_a(t)=x_a(t)*h_a(t)
+    \end{equation*}
+    在以充分小的间隔$T$采样后，得到三个序列
+    $x(n)=x_a(nT),h(n)=h_a(nT),y=y_a(nT)$
+    则有
+    \begin{equation*}
+        y(n)=x(n)\otimes h(n)
+    \end{equation*}
+    其中$\otimes$为离散卷积，可以使用循环卷积实现，进而使用快速傅里叶变换进行优化。
