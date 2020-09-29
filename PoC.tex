@@ -1,0 +1,20 @@
+\documentclass[cs4size,a4paper,AutoFakeBold,fancyhdr]{ctexart}
+    \input{template/preset.tex}
+    %\syntaxonly
+\begin{document}
+%封面页 ==============================
+    \input{template/cover.tex}
+%目录=================================
+    \input{template/toc.tex}
+%正文=================================
+    \input{body/ChapterI.tex}\newpage
+    \input{body/ChapterII.tex}\newpage
+    \input{body/ChapterIII.tex}\newpage
+%附录=================================
+    \appendix
+    \input{body/AppendixI.tex}\newpage
+    \input{body/AppendixII.tex}\newpage
+    \input{body/AppendixIII.tex}\newpage
+    \input{body/AppendixIV.tex}\newpage
+    \input{body/AppendixV.tex}\newpage
+\end{document}
