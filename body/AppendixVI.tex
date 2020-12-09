@@ -1,0 +1,47 @@
+%AppendixVI.tex
+\section{PAM信号的频谱特性的推导}
+    对于映射后的波形
+    \begin{equation*}
+        s(t)=\sum_{n=-\infty}^{\infty}a_ng_T(t-nT_s)
+    \end{equation*}
+    其均值
+    \begin{equation*}
+        \mathscr{E}[s(t)]=\sum_{n=-\infty}^{\infty}\mathscr{E}[a_n]g_T(t-nT_s)=m_a\sum_{n=-\infty}^{\infty}g_T(t-nT_s)
+    \end{equation*}
+    自相关
+    \begin{equation*}
+        \begin{split}
+            R(t+\tau,t) &=\mathscr{E}\left[\sum_{n=-\infty}^{\infty}a_ng_T(t-nT_s+\tau)\sum_{m=-\infty}^{\infty}a_mg_T(t-mT_s)\right]\\
+                        &=\sum_{n=-\infty}^{\infty}\sum_{m=-\infty}^{\infty}\mathscr{E}[a_na_m]g_T(t-nT_s+\tau)g_T(t-mT_s)\\
+                        &=\sum_{n=-\infty}^{\infty}\sum_{m=-\infty}^{\infty}R_a(n-m)g_T(t-nT_s+\tau)g_T(t-mT_s)
+        \end{split}
+    \end{equation*}
+    是周期平稳过程。
+
+    把$s(t)$看作
+    \begin{equation*}
+        s(t)=\sum_{n=-\infty}^{\infty}a_n\delta(t-nT_s)*g_T(t)
+    \end{equation*}
+    左半部分$s_a(t)$是承载信息的离散的冲击序列，右边则是每个码的波形$g_T(t)$。
+    左半部的时间平均自相关函数
+    \begin{equation*}
+        \begin{split}
+            \overline{R_a(t+\tau,t)}&=\frac{1}{T_s}\int_{-\frac{T_s}{2}}^{\frac{T_s}{2}}R_a(t+\tau+t)\dif t\\
+                                    &=\frac{1}{T_s}\sum_{n=-\infty}^{\infty}\sum_{m=-\infty}^{\infty}R_a(n-m)\int_{-\frac{T_s}{2}}^{\frac{T_s}{2}}\delta(t-nT_s+\tau)\delta(t-mT_s)\dif t\\
+                                    &=\frac{1}{T_s}\sum_{k=-\infty}^{\infty}R_a(k)\sum_{m=-\infty}^{\infty}\int_{-\frac{T_s}{2}}^{\frac{T_s}{2}}\delta(t-mT_s-kT_s+\tau)\delta(t-mT_s)\dif t\\
+                                    &=\frac{1}{T_s}\sum_{k=-\infty}^{\infty}R_a(k)\sum_{m=-\infty}^{\infty}\int_{-\frac{T_s}{2}-mT_s}^{\frac{T_s}{2}-mT_s}\delta(t-kT_s+\tau)\delta(t)\dif t\\
+                                    &=\frac{1}{T_s}\sum_{k=-\infty}^{\infty}R_a(k)\int_{-\infty}^{\infty}\delta(t-kT_s+\tau)\delta(t)\dif t\\
+                                    &=\frac{1}{T_s}\sum_{k=-\infty}^{\infty}R_a(k)\delta(\tau-kT_s)
+        \end{split}
+    \end{equation*}
+    根据\hyperref[thm:Wiener_Khinchin]{纳辛--维钦定理}，
+    其功率谱为
+    \begin{equation*}
+        P_a(f)=\frac{1}{T_s}\sum_{k=-\infty}^{\infty}R_a(k)e^{j2\pi kT_sf}
+    \end{equation*}
+    再根据\hyperref[subsubsec:LITsystem]{随机过程通过线性系统}的知识，
+    $s(t)$的功率谱密度为
+    \begin{equation*}
+        P_s(f)=\frac{1}{T_s}\sum_{k=-\infty}^{\infty}R_a(k)e^{j2\pi kT_sf}\abs{G_T(f)}^2
+    \end{equation*}
+

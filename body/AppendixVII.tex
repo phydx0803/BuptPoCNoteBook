@@ -1,0 +1,31 @@
+%AppendixVII.tex
+\section{MASK中数列求和的计算问题}
+    在第六章$M$ASK的部分中我们遇到一个\hyperref[question:sum_of_serises]{数列求和的问题}。
+    \begin{equation*}
+        \sum_{i=1}^{\frac{M}{2}}(2i-1)^2
+    \end{equation*}
+    其中$M$是一个偶数。
+
+    首先给出\href{https://zh.wikipedia.org/wiki/%E5%88%86%E9%83%A8%E6%B1%82%E5%92%8C%E6%B3%95}{阿贝尔求和}：
+    \begin{equation*}
+        \sum^{n}_{i=1}a_ib_i=S_nb_n-\sum_{i=1}^{n-1}S_i(b_{i+1}-b_i)
+    \end{equation*}
+    其中$S_n$是$a_n$的前$n$项和，即$S_n=\displaystyle\sum_{i=1}^{n}a_i$。
+
+    然后令$a_n=1$，$b_n=n^2$，$S_n=n$，带入上式有
+    \begin{equation*}
+        \sum^{n}_{i=1}i^2=n^3-\sum_{i=1}^{n-1}i(2i+1)=n^3-2\sum_{i=1}^{n-1}i^2-\sum_{i=1}^{n-1}i=n^3+\frac{3}{2}n^2+\frac{n}{2}-2\sum_{i=1}^{n}i^2
+    \end{equation*}
+    移相整理得
+    \begin{equation*}
+        \sum^{n}_{i=1}i^2=\frac{n(2n+1)(n+1)}{6} 
+    \end{equation*}
+    再回到原来的问题
+    \begin{equation*}
+        \begin{split}
+            \sum_{i=1}^{\frac{M}{2}}(2i-1)^2&=\sum_{i=1}^{M}i^2-\sum_{i=1}^{\frac{M}{2}}(2i)^2\\
+            &=\frac{M(2M+1)(M+1)}{6}-4\frac{\dfrac{M}{2}\left(2\dfrac{M}{2}+1\right)\left(\dfrac{M}{2}+1\right)}{6}\\
+            &=\frac{M(2M+1)(M+1)}{6}-\frac{M(M+1)(M+2)}{6}\\
+            &=\frac{M(M^2-1)}{6}
+        \end{split}
+    \end{equation*}

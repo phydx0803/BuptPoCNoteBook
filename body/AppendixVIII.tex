@@ -1,0 +1,46 @@
+%AppendixVIII.tex
+\section{MFSK中误符号率与误比特率的换算关系}
+\label{appendix:VIII}
+    假设$K$个比特对应着$M=2^K$个不同的符号。
+    在$M$FSK中，当发生错误的时候，可能会\emph{等概率}地变成另外$M-1$个符号之一。
+    
+    这$M-1$个符号中，与正确的信号相比，至少有1位比特的不同，最多有$K$位。
+    有n位比特不同的符号的个数可以用组合数表达为$C_K^n$。
+    那么每次误判后错误的比特的平均量为
+    \begin{equation*}
+        \bar{n}=\frac{1}{M-1}\sum_{n=1}^{K}nC_K^n
+    \end{equation*}
+
+    接下来进行对上式中求和进行计算：
+    \begin{equation*}
+            \sum_{n=1}^{K}nC_K^n=1C_K^1+2C_K^2+\cdots+(n-1)C_K^{n-1}+nC_K^n
+    \end{equation*}
+    在前面加入值为0的$0C_K^0$，并利用等式$C_n^m=C_n^{n-m}$进行变换得
+    \begin{equation*}
+        \begin{split}
+            \sum_{n=1}^{K}nC_K^n&=0C_K^0+1C_K^1++\cdots+(K-1)C_K^{K-1}+nC_K^K\\
+            \sum_{n=1}^{K}nC_K^{K-n}&=0C_K^K+1C_K^{K-1}+\cdots+(K-1)C_K^1+KC_K^0
+        \end{split}
+    \end{equation*}
+    上下两式相加得
+    \begin{equation*}
+        2\sum_{n=1}^{K}nC_K^n=K\left(C_K^0+C_K^1++\cdots+C_K^{K-1}+C_K^K\right)=K2^K
+    \end{equation*}
+    那么有
+    \begin{equation*}
+        \bar{n}=\frac{K2^K}{2(M-1)}=\frac{K\cdot M}{2(M-1)}
+    \end{equation*}
+
+    因为一个符号对应$K$个比特，那么
+    \begin{equation*}
+        \begin{split}
+            \text{BER}  &=\frac{\text{错误比特数}}{\text{总比特数}}\\
+                        &=\frac{\bar{n}\cdot\text{错误符号数}}{K\cdot\text{总符号数}}\\
+                        &=\frac{K\cdot M}{2K(M-1)}\cdot\frac{\text{错误符号数}}{\text{总符号数}}\\
+                        &=\frac{M}{2(M-1)}\text{SER}
+        \end{split}
+    \end{equation*}
+
+
+
+
